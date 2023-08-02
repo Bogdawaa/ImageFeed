@@ -55,33 +55,35 @@
                                                         <constraint firstAttribute="height" constant="30" id="Osu-wo-63v"/>
                                                     </constraints>
                                                 </view>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="active" translatesAutoresizingMaskIntoConstraints="NO" id="jH4-uD-Fn8">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCg-Ls-Ewt">
                                                     <rect key="frame" x="323" y="0.0" width="44" height="44"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="44" id="PuI-9c-LxN"/>
-                                                        <constraint firstAttribute="width" constant="44" id="cdR-5q-gJK"/>
+                                                        <constraint firstAttribute="height" constant="44" id="XBX-Ve-Vd8"/>
+                                                        <constraint firstAttribute="width" constant="44" id="pnW-p5-ha2"/>
                                                     </constraints>
-                                                </imageView>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="active"/>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="TCg-Ls-Ewt" secondAttribute="trailing" id="7Ey-1e-gWv"/>
                                                 <constraint firstAttribute="bottom" secondItem="3Z4-gb-h1J" secondAttribute="bottom" id="EBI-ZK-6IT"/>
                                                 <constraint firstItem="3Z4-gb-h1J" firstAttribute="leading" secondItem="Dzc-0S-cq8" secondAttribute="leading" id="LPy-eY-Av1"/>
                                                 <constraint firstAttribute="trailing" secondItem="3Z4-gb-h1J" secondAttribute="trailing" id="Qmo-sF-55w"/>
                                                 <constraint firstAttribute="trailing" secondItem="o4e-Ld-CEl" secondAttribute="trailing" id="Y1Z-pR-JTL"/>
                                                 <constraint firstItem="o4e-Ld-CEl" firstAttribute="top" secondItem="Dzc-0S-cq8" secondAttribute="top" constant="4" id="dSB-Lu-pem"/>
                                                 <constraint firstItem="o4e-Ld-CEl" firstAttribute="bottom" secondItem="AEX-u5-uLO" secondAttribute="bottom" constant="8" id="eiB-eV-uAj"/>
+                                                <constraint firstItem="TCg-Ls-Ewt" firstAttribute="top" secondItem="Dzc-0S-cq8" secondAttribute="top" id="g8m-om-dNh"/>
                                                 <constraint firstItem="o4e-Ld-CEl" firstAttribute="leading" secondItem="Dzc-0S-cq8" secondAttribute="leading" id="h3j-Vd-GCb"/>
                                                 <constraint firstAttribute="bottom" secondItem="o4e-Ld-CEl" secondAttribute="bottom" constant="4" id="hyI-sc-03r"/>
-                                                <constraint firstAttribute="trailing" secondItem="jH4-uD-Fn8" secondAttribute="trailing" id="wnQ-ou-v3y"/>
                                                 <constraint firstItem="AEX-u5-uLO" firstAttribute="leading" secondItem="o4e-Ld-CEl" secondAttribute="leading" constant="8" id="ytZ-NE-Val"/>
-                                                <constraint firstItem="jH4-uD-Fn8" firstAttribute="top" secondItem="Dzc-0S-cq8" secondAttribute="top" id="zcQ-Xi-SSk"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="YPBlack"/>
                                         <connections>
                                             <outlet property="cardImageView" destination="o4e-Ld-CEl" id="Gr6-HO-1XH"/>
                                             <outlet property="dateLabel" destination="AEX-u5-uLO" id="7ao-9T-aCo"/>
-                                            <outlet property="favouritesImageView" destination="jH4-uD-Fn8" id="kaD-EJ-Daf"/>
+                                            <outlet property="favouritesButton" destination="TCg-Ls-Ewt" id="pSl-AT-XL2"/>
                                             <outlet property="gradientView" destination="3Z4-gb-h1J" id="e2t-ax-oLC"/>
                                         </connections>
                                     </tableViewCell>

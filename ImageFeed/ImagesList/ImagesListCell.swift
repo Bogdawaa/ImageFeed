@@ -13,7 +13,7 @@ class ImagesListCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var cardImageView: UIImageView!
     @IBOutlet weak var gradientView: UIView!
-    @IBOutlet weak var favouritesImageView: UIImageView!
+    @IBOutlet weak var favouritesButton: UIButton!
     
     func setGradientBackground() {
         let colorTop =  UIColor(red: 0.1/255.0, green: 0.11/255.0, blue: 0.13/255.0, alpha: 0.0).cgColor

@@ -34,11 +34,11 @@ class ImagesListViewController: UIViewController {
         cell.cardImageView.image = image
         cell.dateLabel.text = dateFormatter.string(from: Date())
         
-        if (index.row % 2 == 0) {
-            cell.favouritesImageView.image = UIImage(named: "noActive")
-        } else {
-            cell.favouritesImageView.image = UIImage(named: "active")
-        }
+        let isFavourite = index.row % 2 == 0
+        let favouriteImage = isFavourite ? UIImage(named: "noActive") : UIImage(named: "active")
+        
+        cell.favouritesButton.setImage(favouriteImage, for: .normal)
+        cell.favouritesButton.setTitle("", for: .normal)
     }
 }
 
