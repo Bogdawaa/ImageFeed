@@ -8,12 +8,19 @@
 import UIKit
 
 class ImagesListCell: UITableViewCell {
-    static let reusedIdentifier = "ImagesListCell"
     
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var cardImageView: UIImageView!
-    @IBOutlet weak var gradientView: UIView!
-    @IBOutlet weak var favouritesButton: UIButton!
+    static let reusedIdentifier = "ImagesListCell"
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        return formatter
+    }()
+    
+    @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet private weak var cardImageView: UIImageView!
+    @IBOutlet private weak var gradientView: UIView!
+    @IBOutlet private weak var favouritesButton: UIButton!
     
     func setGradientBackground() {
         let colorTop =  UIColor(red: 0.1/255.0, green: 0.11/255.0, blue: 0.13/255.0, alpha: 0.0).cgColor
@@ -25,5 +32,20 @@ class ImagesListCell: UITableViewCell {
         
         self.gradientView.layer.insertSublayer(gradientLayer, at:0)
         cardImageView.addSubview(gradientView)
+    }
+    
+    func configCell(for cell: ImagesListCell, with index: IndexPath, photoName: String) {
+        guard let image = UIImage(named: photoName) else {
+            return
+        }
+        cell.setGradientBackground()
+        cell.cardImageView.image = image
+        cell.dateLabel.text = dateFormatter.string(from: Date())
+        
+        let isFavourite = index.row % 2 == 0
+        let favouriteImage = isFavourite ? UIImage(named: "noActive") : UIImage(named: "active")
+        
+        cell.favouritesButton.setImage(favouriteImage, for: .normal)
+        cell.favouritesButton.setTitle("", for: .normal)
     }
 }
