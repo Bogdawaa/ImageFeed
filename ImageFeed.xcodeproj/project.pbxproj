@@ -9,21 +9,31 @@
 /* Begin PBXBuildFile section */
 		F017EC4C2A76693A00DF279F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F017EC4B2A76693A00DF279F /* AppDelegate.swift */; };
 		F017EC4E2A76693A00DF279F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F017EC4D2A76693A00DF279F /* SceneDelegate.swift */; };
-		F017EC502A76693A00DF279F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F017EC4F2A76693A00DF279F /* ViewController.swift */; };
+		F017EC502A76693A00DF279F /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F017EC4F2A76693A00DF279F /* ImagesListViewController.swift */; };
 		F017EC532A76693A00DF279F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F017EC512A76693A00DF279F /* Main.storyboard */; };
 		F017EC552A76693D00DF279F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F017EC542A76693D00DF279F /* Assets.xcassets */; };
 		F017EC582A76693D00DF279F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F017EC562A76693D00DF279F /* LaunchScreen.storyboard */; };
+		F0C8BDD12A79733400CE3EEA /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C8BDD02A79733400CE3EEA /* UIColor+Extensions.swift */; };
+		F0C8BDD32A7980AC00CE3EEA /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C8BDD22A7980AC00CE3EEA /* ImagesListCell.swift */; };
+		F0C8BDD82A7ADFC900CE3EEA /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0C8BDD62A7ADFC800CE3EEA /* YS Display-Bold.ttf */; };
+		F0C8BDD92A7ADFC900CE3EEA /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0C8BDD72A7ADFC800CE3EEA /* YS Display-Medium.ttf */; };
+		F0C8BDDB2A7AE13E00CE3EEA /* YS Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0C8BDDA2A7AE13E00CE3EEA /* YS Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F017EC482A76693A00DF279F /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F017EC4B2A76693A00DF279F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F017EC4D2A76693A00DF279F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		F017EC4F2A76693A00DF279F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F017EC4F2A76693A00DF279F /* ImagesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListViewController.swift; sourceTree = "<group>"; };
 		F017EC522A76693A00DF279F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F017EC542A76693D00DF279F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F017EC572A76693D00DF279F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F017EC592A76693D00DF279F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F0C8BDD02A79733400CE3EEA /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		F0C8BDD22A7980AC00CE3EEA /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
+		F0C8BDD62A7ADFC800CE3EEA /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
+		F0C8BDD72A7ADFC800CE3EEA /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
+		F0C8BDDA2A7AE13E00CE3EEA /* YS Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +66,52 @@
 		F017EC4A2A76693A00DF279F /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				F0C8BDCF2A79731900CE3EEA /* Helpers */,
 				F017EC4B2A76693A00DF279F /* AppDelegate.swift */,
 				F017EC4D2A76693A00DF279F /* SceneDelegate.swift */,
-				F017EC4F2A76693A00DF279F /* ViewController.swift */,
+				F0C8BDD42A7980CF00CE3EEA /* ImagesList */,
 				F017EC512A76693A00DF279F /* Main.storyboard */,
-				F017EC542A76693D00DF279F /* Assets.xcassets */,
-				F017EC562A76693D00DF279F /* LaunchScreen.storyboard */,
 				F017EC592A76693D00DF279F /* Info.plist */,
+				F0C8BD832A768B7B00CE3EEA /* Resources */,
 			);
 			path = ImageFeed;
+			sourceTree = "<group>";
+		};
+		F0C8BD832A768B7B00CE3EEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F0C8BDD52A7ADFC800CE3EEA /* Fonts */,
+				F017EC562A76693D00DF279F /* LaunchScreen.storyboard */,
+				F017EC542A76693D00DF279F /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F0C8BDCF2A79731900CE3EEA /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				F0C8BDD02A79733400CE3EEA /* UIColor+Extensions.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		F0C8BDD42A7980CF00CE3EEA /* ImagesList */ = {
+			isa = PBXGroup;
+			children = (
+				F017EC4F2A76693A00DF279F /* ImagesListViewController.swift */,
+				F0C8BDD22A7980AC00CE3EEA /* ImagesListCell.swift */,
+			);
+			path = ImagesList;
+			sourceTree = "<group>";
+		};
+		F0C8BDD52A7ADFC800CE3EEA /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				F0C8BDDA2A7AE13E00CE3EEA /* YS Regular.ttf */,
+				F0C8BDD62A7ADFC800CE3EEA /* YS Display-Bold.ttf */,
+				F0C8BDD72A7ADFC800CE3EEA /* YS Display-Medium.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,8 +172,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0C8BDD92A7ADFC900CE3EEA /* YS Display-Medium.ttf in Resources */,
+				F0C8BDD82A7ADFC900CE3EEA /* YS Display-Bold.ttf in Resources */,
 				F017EC582A76693D00DF279F /* LaunchScreen.storyboard in Resources */,
 				F017EC552A76693D00DF279F /* Assets.xcassets in Resources */,
+				F0C8BDDB2A7AE13E00CE3EEA /* YS Regular.ttf in Resources */,
 				F017EC532A76693A00DF279F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,9 +188,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F017EC502A76693A00DF279F /* ViewController.swift in Sources */,
+				F017EC502A76693A00DF279F /* ImagesListViewController.swift in Sources */,
 				F017EC4C2A76693A00DF279F /* AppDelegate.swift in Sources */,
+				F0C8BDD32A7980AC00CE3EEA /* ImagesListCell.swift in Sources */,
 				F017EC4E2A76693A00DF279F /* SceneDelegate.swift in Sources */,
+				F0C8BDD12A79733400CE3EEA /* UIColor+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
