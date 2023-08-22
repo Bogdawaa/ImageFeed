@@ -10,6 +10,7 @@ import UIKit
 class ImagesListCell: UITableViewCell {
     
     static let reusedIdentifier = "ImagesListCell"
+    private var isGradientSet = false
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -18,7 +19,7 @@ class ImagesListCell: UITableViewCell {
     }()
     
     @IBOutlet private weak var dateLabel: UILabel!
-    @IBOutlet private weak var cardImageView: UIImageView!
+    @IBOutlet private weak var cardImageView: UIImageView!  
     @IBOutlet private weak var gradientView: UIView!
     @IBOutlet private weak var favouritesButton: UIButton!
     
@@ -38,7 +39,10 @@ class ImagesListCell: UITableViewCell {
         guard let image = UIImage(named: photoName) else {
             return
         }
-        cell.setGradientBackground()
+        if isGradientSet == false {
+            cell.setGradientBackground()
+            isGradientSet = true
+        }
         cell.cardImageView.image = image
         cell.dateLabel.text = dateFormatter.string(from: Date())
         
