@@ -70,6 +70,8 @@
 		F017EC4A2A76693A00DF279F /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				F064B8592A9537C700C009A9 /* SingleImageView */,
+				F064B8582A9537AD00C009A9 /* ProfileView */,
 				F0C8BDCF2A79731900CE3EEA /* Helpers */,
 				F017EC4B2A76693A00DF279F /* AppDelegate.swift */,
 				F017EC4D2A76693A00DF279F /* SceneDelegate.swift */,
@@ -77,10 +79,24 @@
 				F017EC512A76693A00DF279F /* Main.storyboard */,
 				F017EC592A76693D00DF279F /* Info.plist */,
 				F0C8BD832A768B7B00CE3EEA /* Resources */,
-				F0E746B32A88977E003CD450 /* ProfileViewController.swift */,
-				F0E746B52A8B2511003CD450 /* SingleImageViewController.swift */,
 			);
 			path = ImageFeed;
+			sourceTree = "<group>";
+		};
+		F064B8582A9537AD00C009A9 /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				F0E746B32A88977E003CD450 /* ProfileViewController.swift */,
+			);
+			path = ProfileView;
+			sourceTree = "<group>";
+		};
+		F064B8592A9537C700C009A9 /* SingleImageView */ = {
+			isa = PBXGroup;
+			children = (
+				F0E746B52A8B2511003CD450 /* SingleImageViewController.swift */,
+			);
+			path = SingleImageView;
 			sourceTree = "<group>";
 		};
 		F0C8BD832A768B7B00CE3EEA /* Resources */ = {
