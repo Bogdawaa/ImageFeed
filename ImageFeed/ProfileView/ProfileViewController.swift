@@ -9,16 +9,6 @@ import UIKit
 
 final class ProfileViewVontroller: UIViewController {
     
-    override func viewDidLoad() {
-        view.addSubview(profileImageView)
-        view.addSubview(profileName)
-        view.addSubview(profileNickname)
-        view.addSubview(profileMessage)
-        view.addSubview(exitButton)
-        
-        applyConstraints()
-    }
-    
     private lazy var profileImageView: UIImageView = {
         let image = UIImage(named: "profilePhoto")
         let imageView = UIImageView(image: image)
@@ -29,7 +19,6 @@ final class ProfileViewVontroller: UIViewController {
     private lazy var profileName: UILabel = {
         let label = UILabel()
         label.text = "Екатерина Новикова"
-//        label.font = UIFont(name: "YS Display", size: 23)
         label.font = .systemFont(ofSize: 23, weight: .bold)
         label.textColor = .ypWhite
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -62,7 +51,17 @@ final class ProfileViewVontroller: UIViewController {
         return btn
     }()
     
-    func applyConstraints() {
+    override func viewDidLoad() {
+        view.addSubview(profileImageView)
+        view.addSubview(profileName)
+        view.addSubview(profileNickname)
+        view.addSubview(profileMessage)
+        view.addSubview(exitButton)
+        
+        applyConstraints()
+    }
+    
+    private func applyConstraints() {
         let profileImageViewConstraints = [
             profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
             profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
