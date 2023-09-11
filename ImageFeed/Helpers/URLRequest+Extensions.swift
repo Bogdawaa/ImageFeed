@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 extension URLRequest {
     static func makeHttpRequest(
         path: String,

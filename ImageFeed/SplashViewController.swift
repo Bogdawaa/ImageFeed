@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SplashViewController: UIViewController {
+final class SplashViewController: UIViewController {
     
     private let identifier = "ShowAuthViewController"
     private let storage = OAuth2TokenStorage()
@@ -15,8 +15,9 @@ class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+//        UserDefaults.standard.removeObject(forKey: "token")
         if let token = storage.token {
+            print(token)
             showTabBarController()
         } else {
             performSegue(withIdentifier: identifier, sender: nil)
@@ -28,7 +29,7 @@ class SplashViewController: UIViewController {
             guard let navigationController = segue.destination as? UINavigationController,
                   let viewController = navigationController.viewControllers[0] as? AuthViewController
             else {
-                fatalError("Failet to load \(identifier)")
+                fatalError("Failed to load \(identifier)")
             }
             viewController.delegate = self
         } else {
@@ -51,17 +52,17 @@ extension SplashViewController: AuthViewControllerDelegate {
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
             self.fetchOAuthToken(code: code)
-            self.storage.token = code
         }
     }
+    
     func fetchOAuthToken(code: String) {
         oAuth2Service.fetchOAuthToken(code: code) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success:
-                self.storage.token = code
                 self.showTabBarController()
             case .failure:
+                print("error in fetch authToken")
                 break
             }
         }

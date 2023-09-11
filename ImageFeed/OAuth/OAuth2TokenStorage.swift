@@ -7,13 +7,13 @@
 
 import Foundation
 
-class OAuth2TokenStorage {
+final class OAuth2TokenStorage {
     
     private let userDefaults = UserDefaults.standard
     
     var token: String? {
         get {
-            userDefaults.string(forKey: "token")
+            return userDefaults.string(forKey: "token")
         }
         set {
             userDefaults.set(newValue, forKey: "token")

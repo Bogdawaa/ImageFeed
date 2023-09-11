@@ -7,7 +7,7 @@
 
 import Foundation
 
-class OAuth2Service {
+final class OAuth2Service {
     
     static let shared = OAuth2Service()
     
@@ -24,16 +24,18 @@ class OAuth2Service {
     
     func fetchOAuthToken(
         code: String,
-        completion: @escaping(Result<String,Error>)-> Void) {
+        completion: @escaping(Result<String, Error>) -> Void) {
         let request = authTokenRequest(code: code)
         let task = object(for: request) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let body):
+                print("body.token: \(body.accessToken)")
                 let authToken = body.accessToken
                 self.authToken = authToken
                 completion(.success(authToken))
             case .failure(let error):
+                print("error: \(error.localizedDescription)")
                 completion(.failure(error))
             }
         }

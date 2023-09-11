@@ -368,7 +368,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="Ine-Eg-JSQ" kind="presentation" identifier="ShowAuthViewController" modalPresentationStyle="overFullScreen" id="y8T-P9-kmm"/>
+                        <segue destination="Ine-Eg-JSQ" kind="presentation" identifier="ShowAuthViewController" modalPresentationStyle="overCurrentContext" id="y8T-P9-kmm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VUg-gi-fpU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

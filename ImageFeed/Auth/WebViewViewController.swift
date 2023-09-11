@@ -33,6 +33,8 @@ final class WebViewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        webView.navigationDelegate = self
+        
         var urlComponents = URLComponents(string: UnsplashAuthorizeURLString)!
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: AccessKey),
@@ -43,8 +45,6 @@ final class WebViewViewController: UIViewController {
         let url = urlComponents.url!
         let request = URLRequest(url: url)
         webView.load(request)
-        
-        webView.navigationDelegate = self
         
         updateProgress()
     }
@@ -83,7 +83,7 @@ final class WebViewViewController: UIViewController {
         if
             let url = navigationAction.request.url,
             let urlComponents = URLComponents(string: url.absoluteString),
-            urlComponents.path == "/oauth/authorize/",
+            urlComponents.path == "/oauth/authorize/native",
             let items = urlComponents.queryItems,
             let codeItem = items.first(where: { $0.name == "code"})
         {
@@ -100,9 +100,11 @@ extension WebViewViewController: WKNavigationDelegate {
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
             if let code = code(from: navigationAction) {
+                print("code in web=\(code)")
                 delegate?.webViewViewController(self, didAuthenticateWithCode: code)
-                decisionHandler(.cancel)
+                decisionHandler(.allow)
             } else {
+                print("code != code error")
                 decisionHandler(.allow)
             }
     }
