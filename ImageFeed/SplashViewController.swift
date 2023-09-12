@@ -15,9 +15,7 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        UserDefaults.standard.removeObject(forKey: "token")
         if let token = storage.token {
-            print(token)
             showTabBarController()
         } else {
             performSegue(withIdentifier: identifier, sender: nil)
@@ -62,7 +60,6 @@ extension SplashViewController: AuthViewControllerDelegate {
             case .success:
                 self.showTabBarController()
             case .failure:
-                print("error in fetch authToken")
                 break
             }
         }

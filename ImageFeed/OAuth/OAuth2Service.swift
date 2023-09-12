@@ -30,12 +30,10 @@ final class OAuth2Service {
             guard let self = self else { return }
             switch result {
             case .success(let body):
-                print("body.token: \(body.accessToken)")
                 let authToken = body.accessToken
                 self.authToken = authToken
                 completion(.success(authToken))
             case .failure(let error):
-                print("error: \(error.localizedDescription)")
                 completion(.failure(error))
             }
         }
@@ -49,6 +47,7 @@ extension OAuth2Service {
         completion: @escaping(Result<OAuthTokenResponseBody, Error>) -> Void
     ) -> URLSessionTask {
         let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         return urlSession.data(for: request) { (result: Result<Data, Error>) in
             let response = result.flatMap { data -> Result<OAuthTokenResponseBody, Error> in
                 Result {
@@ -62,9 +61,9 @@ extension OAuth2Service {
     private func authTokenRequest(code: String) -> URLRequest {
         URLRequest.makeHttpRequest(
             path: "/oauth/token"
-            + "?client_id=\(AccessKey)"
-            + "&&client_secret=(\(SecretKey)"
-            + "&&redirect_uri=\(RedirectURI)"
+            + "?client_id=\(Constants.accessKey)"
+            + "&&client_secret=\(Constants.secretKey)"
+            + "&&redirect_uri=\(Constants.redirectURI)"
             + "&&code=\(code)"
             + "&&grant_type=authorization_code",
             httpMethod: "POST",
