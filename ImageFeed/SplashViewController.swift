@@ -15,11 +15,8 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let token = storage.token {
-            showTabBarController()
-        } else {
+        storage.token != nil ? showTabBarController() :
             performSegue(withIdentifier: identifier, sender: nil)
-        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
