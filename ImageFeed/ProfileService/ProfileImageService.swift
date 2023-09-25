@@ -20,7 +20,7 @@ struct UserResult: Codable {
 final class ProfileImageService {
     
     static let shared = ProfileImageService()
-    static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
     private (set) var avatarURL: String?
     private let urlSession = URLSession.shared
@@ -39,12 +39,12 @@ final class ProfileImageService {
                 case .success(let body):
                     avatarURL = body.profileImage.small
                     completion(.success(body.profileImage.small))
+                    guard let avatarURL = avatarURL else { return }
                     NotificationCenter.default.post(
-                        name: ProfileImageService.DidChangeNotification,
+                        name: ProfileImageService.didChangeNotification,
                         object: self,
-                        userInfo: ["URL": avatarURL!])
+                        userInfo: ["URL": avatarURL])
                 case .failure(let error):
-                    print(error.localizedDescription)
                     completion(.failure(error))
                 }
             }

@@ -14,11 +14,11 @@ enum NetworkError: Error {
 }
 
 extension URLSession {
-    func data<T: Decodable>(
+    func data(
         for request: URLRequest,
-        completion: @escaping(Result<T, Error>)-> Void
+        completion: @escaping(Result<Data, Error>)-> Void
     ) -> URLSessionTask {
-        let fulfilCompletion: (Result<T, Error>) -> Void = { result in
+        let fulfilCompletion: (Result<Data, Error>) -> Void = { result in
             DispatchQueue.main.async {
                 completion(result)
             }
@@ -30,7 +30,7 @@ extension URLSession {
                let statusCode = (response as? HTTPURLResponse)?.statusCode
             {
                 if 200 ..< 300 ~= statusCode {
-                    fulfilCompletion(.success(data as! T))
+                    fulfilCompletion(.success(data))
                 } else {
                     fulfilCompletion(.failure(NetworkError.httpStatusCode(statusCode)))
                 }

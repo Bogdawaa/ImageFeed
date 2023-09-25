@@ -39,8 +39,8 @@ final class OAuth2Service {
                 case .success(let body):
                     let authToken = body.accessToken
                     self.authToken = authToken
-                    completion(.success(authToken))
                     self.task = nil
+                    completion(.success(authToken))
                 case .failure(let error):
                     self.lastCode = nil
                     completion(.failure(error))

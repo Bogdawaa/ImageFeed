@@ -7,6 +7,7 @@
 
 import UIKit
 import ProgressHUD
+import SwiftKeychainWrapper
 
 final class SplashViewController: UIViewController {
     
@@ -15,7 +16,6 @@ final class SplashViewController: UIViewController {
     private let oAuth2Service = OAuth2Service.shared
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
-    private let authViewController = AuthViewController()
     
     private lazy var logoImageView: UIImageView = {
         let image = UIImage(named: "practikum")
@@ -37,8 +37,11 @@ final class SplashViewController: UIViewController {
         if storage.token != nil{
             fetchProfile(token: storage.token!)
         }  else {
+            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+            guard let authViewController = storyBoard.instantiateViewController(
+                withIdentifier: "AuthViewController") as? AuthViewController else { return }
             authViewController.delegate = self
-            modalPresentationStyle = .fullScreen
+            authViewController.modalPresentationStyle = .fullScreen
             present(authViewController, animated: true)
         }
     }
@@ -60,13 +63,13 @@ final class SplashViewController: UIViewController {
         window.rootViewController = tabBarController
     }
     
-    private func showErrorAlert() {
+    private func showErrorAlert(handler: @escaping (UIAlertAction)-> Void) {
         let alert = UIAlertController(
             title: "Что -то пошло не так(",
             message: "Не удалось войти в систему",
             preferredStyle: .alert
         )
-        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        let action = UIAlertAction(title: "Ok", style: .default, handler: handler)
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
@@ -91,7 +94,10 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.fetchProfile(token: token)
             case .failure:
                 UIBlockingProgressHUD.dismiss()
-                showErrorAlert()
+                showErrorAlert { [weak self] _ in
+                    guard let self = self else { return }
+                    self.fetchOAuthToken(code: code)
+                }
                 break
             }
         }
@@ -106,6 +112,10 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.fetchProfileImageURL(username: profile.username)
             case .failure:
                 UIBlockingProgressHUD.dismiss()
+                showErrorAlert { [weak self] _ in
+                    guard let self = self else { return }
+                    self.fetchProfile(token: token)
+                }
                 break
             }
         }
@@ -118,6 +128,10 @@ extension SplashViewController: AuthViewControllerDelegate {
             case .success:
                 self.showTabBarController()
             case .failure:
+                showErrorAlert { [weak self] _ in
+                    guard let self = self else { return }
+                    self.fetchProfileImageURL(username: username)
+                }
                 break
             }
         }

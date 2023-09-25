@@ -29,7 +29,7 @@ final class ProfileService {
                     profile = Profile(
                         username: profileResult.username,
                         firstName: profileResult.firstName,
-                        lastName: profileResult.lastName,
+                        lastName: profileResult.lastName ?? "",
                         bio: profileResult.bio ?? ""
                     )
                     completion(.success(profileResult))
