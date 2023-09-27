@@ -6,8 +6,17 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewVontroller: UIViewController {
+    
+    private let token = OAuth2TokenStorage().token
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
+    
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
+    private var profile: Profile?
     
     private lazy var profileImageView: UIImageView = {
         let image = UIImage(named: "profilePhoto")
@@ -16,27 +25,27 @@ final class ProfileViewVontroller: UIViewController {
         return imageView
     }()
     
-    private lazy var profileName: UILabel = {
+    private lazy var profileNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Екатерина Новикова"
+        label.text = ""
         label.font = .systemFont(ofSize: 23, weight: .bold)
         label.textColor = .ypWhite
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var profileNickname: UILabel = {
+    private lazy var profileLoginNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "@ekaterina_nov"
+        label.text = ""
         label.font = .systemFont(ofSize: 13, weight: .regular)
         label.textColor = .ypGray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var profileMessage: UILabel = {
+    private lazy var profileBioLabel: UILabel = {
         let label = UILabel()
-        label.text = "Hello"
+        label.text = ""
         label.font = .systemFont(ofSize: 17, weight: .regular)
         label.textColor = .ypWhite
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -52,13 +61,42 @@ final class ProfileViewVontroller: UIViewController {
     }()
     
     override func viewDidLoad() {
+        view.backgroundColor = .ypBlack
+        
         view.addSubview(profileImageView)
-        view.addSubview(profileName)
-        view.addSubview(profileNickname)
-        view.addSubview(profileMessage)
+        view.addSubview(profileNameLabel)
+        view.addSubview(profileLoginNameLabel)
+        view.addSubview(profileBioLabel)
         view.addSubview(exitButton)
         
         applyConstraints()
+
+        if let profile = profileService.profile {
+            updateProfile(with: profile)
+        }
+        
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.didChangeNotification,
+            object: nil,
+            queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
+    }
+    
+    private func updateAvatar() {
+        guard let avatarURL = ProfileImageService.shared.avatarURL,
+              let url = URL(string: avatarURL)
+        else { return }
+        let processor = RoundCornerImageProcessor(cornerRadius: 20, backgroundColor: .ypBlack)
+        profileImageView.kf.indicatorType = .activity
+        profileImageView.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "placeholder.jpeg"),
+            options: [.processor(processor)]
+        )
     }
     
     private func applyConstraints() {
@@ -75,24 +113,30 @@ final class ProfileViewVontroller: UIViewController {
             exitButton.widthAnchor.constraint(equalToConstant: 44)
         ]
         let profileNameConstraints = [
-            profileName.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 8),
-            profileName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            profileName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 16),
+            profileNameLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 8),
+            profileNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            profileNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 16),
         ]
         let profileNicknameConstraints = [
-            profileNickname.topAnchor.constraint(equalTo: profileName.bottomAnchor, constant: 8),
-            profileNickname.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            profileNickname.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 16),
+            profileLoginNameLabel.topAnchor.constraint(equalTo: profileNameLabel.bottomAnchor, constant: 8),
+            profileLoginNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            profileLoginNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 16),
         ]
         let profileMessageConstraints = [
-            profileMessage.topAnchor.constraint(equalTo: profileNickname.bottomAnchor, constant: 8),
-            profileMessage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            profileMessage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 16)
+            profileBioLabel.topAnchor.constraint(equalTo: profileLoginNameLabel.bottomAnchor, constant: 8),
+            profileBioLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            profileBioLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 16)
         ]
         NSLayoutConstraint.activate(profileImageViewConstraints)
         NSLayoutConstraint.activate(profileNameConstraints)
         NSLayoutConstraint.activate(profileNicknameConstraints)
         NSLayoutConstraint.activate(profileMessageConstraints)
         NSLayoutConstraint.activate(exitButtonConstraints)
+    }
+    
+    private func updateProfile(with profile: Profile) {
+        profileNameLabel.text = profile.name
+        profileLoginNameLabel.text = profile.loginName
+        profileBioLabel.text = profile.bio
     }
 }
