@@ -9,6 +9,14 @@ import UIKit
 
 final class SingleImageViewController: UIViewController {
     
+    var image: UIImage! {
+        didSet {
+            guard isViewLoaded else { return }
+            singleImageView.image = image
+            rescaleAndCenterImageInScrollView(image: image)
+        }
+    }
+    
     @IBOutlet private var singleImageView: UIImageView!
     @IBOutlet private weak var scrollView: UIScrollView!
     
@@ -23,14 +31,6 @@ final class SingleImageViewController: UIViewController {
     
     @IBAction private func didTapBackButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
-    }
-    
-    var image: UIImage! {
-        didSet {
-            guard isViewLoaded else { return }
-            singleImageView.image = image
-            rescaleAndCenterImageInScrollView(image: image)
-        }
     }
     
     override func viewDidLoad() {

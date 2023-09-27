@@ -10,17 +10,13 @@ import Kingfisher
 
 final class ProfileViewVontroller: UIViewController {
     
-    private let token = OAuth2TokenStorage().token!
+    private let token = OAuth2TokenStorage().token
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
-    private var profile = Profile(
-        username: "@ekaterina_nov",
-        firstName: "Екатерина",
-        lastName: "Новикова",
-        bio: "Hello")
+    private var profile: Profile?
     
     private lazy var profileImageView: UIImageView = {
         let image = UIImage(named: "profilePhoto")
@@ -31,7 +27,7 @@ final class ProfileViewVontroller: UIViewController {
     
     private lazy var profileNameLabel: UILabel = {
         let label = UILabel()
-        label.text = profile.name
+        label.text = ""
         label.font = .systemFont(ofSize: 23, weight: .bold)
         label.textColor = .ypWhite
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +36,7 @@ final class ProfileViewVontroller: UIViewController {
     
     private lazy var profileLoginNameLabel: UILabel = {
         let label = UILabel()
-        label.text = profile.username
+        label.text = ""
         label.font = .systemFont(ofSize: 13, weight: .regular)
         label.textColor = .ypGray
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -49,7 +45,7 @@ final class ProfileViewVontroller: UIViewController {
     
     private lazy var profileBioLabel: UILabel = {
         let label = UILabel()
-        label.text = profile.bio
+        label.text = ""
         label.font = .systemFont(ofSize: 17, weight: .regular)
         label.textColor = .ypWhite
         label.translatesAutoresizingMaskIntoConstraints = false
