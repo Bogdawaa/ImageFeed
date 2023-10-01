@@ -13,6 +13,7 @@ final class ImagesListViewController: UIViewController {
     
     private let ShowSingleImageSegueIdentifier = "ShowImage"
     private let photoName: [String] = Array(0..<20).map{ "\($0)" }
+    private var imageListService: ImageListService?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +39,7 @@ extension ImagesListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       guard let cell = tableView.dequeueReusableCell(
+        guard let cell = tableView.dequeueReusableCell(
             withIdentifier: ImagesListCell.reusedIdentifier,
             for: indexPath
         ) as? ImagesListCell else {
@@ -64,5 +65,16 @@ extension ImagesListViewController: UITableViewDataSource, UITableViewDelegate {
         let ratio = imageViewWidth / imageWidth
         let height = image.size.height * ratio + imageInsets.top + imageInsets.bottom
         return height
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        imageListService = ImageListService()
+        guard let imageListService = imageListService else { return }
+        if indexPath.row + 1 == imageListService.photos.count {
+            imageListService.fetchPhotosNextPage { [weak self] result in
+                guard let self = self else { return }
+                //
+            }
+        }
     }
 }
