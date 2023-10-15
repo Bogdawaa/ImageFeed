@@ -15,7 +15,7 @@ protocol ImageListCellDelegate: AnyObject {
 class ImagesListCell: UITableViewCell {
     
     @IBOutlet weak var cardImageView: UIImageView!
-    @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet private weak var gradientView: UIView!
     @IBOutlet private weak var likeButton: UIButton!
     
@@ -58,7 +58,7 @@ class ImagesListCell: UITableViewCell {
             isGradientSet = true
         }
         cell.cardImageView.backgroundColor = .ypWhite.withAlphaComponent(0.5)
-        cell.dateLabel.text = dateFormatter.string(from: Date())
+//        cell.dateLabel.text = dateFormatter.string(from: Date())
         cell.likeButton.setTitle("", for: .normal)
     }
     
