@@ -15,8 +15,9 @@ final class ProfileViewVontroller: UIViewController {
     private let profileImageService = ProfileImageService.shared
     
     private var profileImageServiceObserver: NSObjectProtocol?
-    
     private var profile: Profile?
+    
+    private var animationLayers = Set<CALayer>()
     
     private lazy var profileImageView: UIImageView = {
         let image = UIImage(named: "profilePhoto")
@@ -57,6 +58,7 @@ final class ProfileViewVontroller: UIViewController {
         btn.setTitle("", for: .normal)
         btn.setImage(UIImage(named: "exit"), for: .normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.addTarget(self, action: Selector(("exitButtonClicked")), for: .touchUpInside)
         return btn
     }()
     
@@ -138,5 +140,13 @@ final class ProfileViewVontroller: UIViewController {
         profileNameLabel.text = profile.name
         profileLoginNameLabel.text = profile.loginName
         profileBioLabel.text = profile.bio
+    }
+    
+    @objc private func exitButtonClicked() {
+        CookieService.clean()
+        OAuth2TokenStorage().cleanToken()
+        
+        let vc = SplashViewController()
+        self.show(vc, sender: self)
     }
 }

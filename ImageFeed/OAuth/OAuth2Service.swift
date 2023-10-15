@@ -12,6 +12,7 @@ final class OAuth2Service {
     static let shared = OAuth2Service()
     
     private let urlSession = URLSession.shared
+    
     private var task: URLSessionTask?
     private var lastCode: String?
     
