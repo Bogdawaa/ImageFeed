@@ -19,6 +19,8 @@ final class ImageListService {
     
     private let urlSession = URLSession.shared
     
+    private init() { }
+    
     func fetchPhotosNextPage() {
         assert(Thread.isMainThread)
         guard let token = OAuth2TokenStorage().token else { return }
@@ -44,8 +46,7 @@ final class ImageListService {
                         let photo = Photo(
                             id: item.id,
                             size: CGSize(width: item.width, height: item.height),
-//                            createdAt: DateFormatter().date(from: item.createdAt ?? ""),
-                            createdAtString: item.createdAt ?? "",
+                            createdAt: DateFormatter().date(from: item.createdAt ?? ""),
                             welcomeDescription: item.description ?? "",
                             thumbimageURL: item.urls.thumb,
                             largeImageURL: item.urls.full,
@@ -87,7 +88,7 @@ final class ImageListService {
                     let newPhoto = Photo(
                         id: body.photo.id,
                         size: CGSize(width: body.photo.width, height: body.photo.height),
-                        createdAtString: body.photo.createdAt ?? "",
+                        createdAt: ISO8601DateFormatter().date(from: body.photo.createdAt ?? ""),
                         welcomeDescription: body.photo.description ?? "",
                         thumbimageURL: body.photo.urls.thumb,
                         largeImageURL: body.photo.urls.full,

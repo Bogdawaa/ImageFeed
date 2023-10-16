@@ -24,10 +24,11 @@ class ImagesListCell: UITableViewCell {
     weak var delegate: ImageListCellDelegate?
     
     private var isGradientSet = false
+    
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
+        formatter.dateFormat = "dd MMMM yyyy"
+        formatter.locale = Locale(identifier: "ru_RU")
         return formatter
     }()
     
@@ -52,13 +53,19 @@ class ImagesListCell: UITableViewCell {
         cardImageView.addSubview(gradientView)
     }
     
-    func configCell(for cell: ImagesListCell, with index: IndexPath, thumbURL: String) {
+    func configCell(for cell: ImagesListCell, with index: IndexPath, thumbURL: String, createdAt: Date?) {
         if isGradientSet == false {
             cell.setGradientBackground()
             isGradientSet = true
         }
         cell.cardImageView.backgroundColor = .ypWhite.withAlphaComponent(0.5)
-//        cell.dateLabel.text = dateFormatter.string(from: Date())
+        
+        if let createdAt = createdAt {
+            cell.dateLabel.text = dateFormatter.string(from: createdAt)
+            print("date: \(dateFormatter.string(from: createdAt))")
+        } else {
+            cell.dateLabel.text = ""
+        }
         cell.likeButton.setTitle("", for: .normal)
     }
     

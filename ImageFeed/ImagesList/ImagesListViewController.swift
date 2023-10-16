@@ -19,7 +19,6 @@ final class ImagesListViewController: UIViewController {
     private let ShowSingleImageSegueIdentifier = "ShowImage"
     private let photoName: [String] = Array(0..<20).map{ "\($0)" }
     private let imageListService = ImageListService.shared
-    private var dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,9 +36,6 @@ final class ImagesListViewController: UIViewController {
                 guard let self = self else { return }
                 self.updateTableViewAnimated()
             }
-        
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -81,14 +77,14 @@ extension ImagesListViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
         cell.delegate = self
-        cell.configCell(for: cell, with: indexPath, thumbURL: photos[indexPath.row].thumbimageURL)
+        cell.configCell(
+            for: cell,
+            with: indexPath,
+            thumbURL: photos[indexPath.row].thumbimageURL,
+            createdAt: photos[indexPath.row].createdAt
+        )
+        
         cell.setIsLike(photos[indexPath.row].isLiked)
-
-        if let createdAt = photos[indexPath.row].createdAt {
-            cell.dateLabel.text = dateFormatter.string(from: createdAt)
-        } else {
-            cell.dateLabel.text = ""
-        }
         
         let imageURL = URL(string: photos[indexPath.row].thumbimageURL)
         cell.cardImageView.kf.indicatorType = .activity
