@@ -13,7 +13,7 @@ final class SplashViewController: UIViewController {
     
     private var alertPresenter: AlertPresenter?
     
-    private let identifier = "ShowAuthViewController"
+    private let identifier = "showAuthViewController"
     
     private let storage = OAuth2TokenStorage()
     
@@ -41,12 +41,14 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if storage.token != nil{
+        
+        guard UIBlockingProgressHUD.isShowing == false else { return }
+        if storage.token != nil {
             fetchProfile(token: storage.token!)
         }  else {
             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
             guard let authViewController = storyBoard.instantiateViewController(
-                withIdentifier: "AuthViewController") as? AuthViewController else { return }
+                withIdentifier: "authViewController") as? AuthViewController else { return }
             authViewController.delegate = self
             authViewController.modalPresentationStyle = .fullScreen
             present(authViewController, animated: true)
@@ -66,7 +68,7 @@ final class SplashViewController: UIViewController {
             return
         }
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(identifier: "TabBarController")
+            .instantiateViewController(identifier: "tabBarController")
         window.rootViewController = tabBarController
     }
     

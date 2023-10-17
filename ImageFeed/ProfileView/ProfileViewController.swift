@@ -17,8 +17,6 @@ final class ProfileViewVontroller: UIViewController {
     private var profileImageServiceObserver: NSObjectProtocol?
     private var profile: Profile?
     
-    private var animationLayers = Set<CALayer>()
-    
     private lazy var profileImageView: UIImageView = {
         let image = UIImage(named: "profilePhoto")
         let imageView = UIImageView(image: image)

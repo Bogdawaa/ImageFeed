@@ -10,7 +10,7 @@ import Foundation
 final class ImageListService {
     
     static let shared = ImageListService()
-    static let didChangeNotification = Notification.Name(rawValue: "ImageListProviderDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "imageListProviderDidChange")
     
     private (set) var photos: [Photo] = []
     
@@ -18,6 +18,7 @@ final class ImageListService {
     private var task: URLSessionTask?
     
     private let urlSession = URLSession.shared
+    private let dateFormatter = ImageFeedDateFormatter.shared
     
     private init() { }
     
@@ -46,7 +47,7 @@ final class ImageListService {
                         let photo = Photo(
                             id: item.id,
                             size: CGSize(width: item.width, height: item.height),
-                            createdAt: DateFormatter().date(from: item.createdAt ?? ""),
+                            createdAt: dateFormatter.isoDateFromString(from: item.createdAt ?? ""),
                             welcomeDescription: item.description ?? "",
                             thumbimageURL: item.urls.thumb,
                             largeImageURL: item.urls.full,
@@ -88,7 +89,7 @@ final class ImageListService {
                     let newPhoto = Photo(
                         id: body.photo.id,
                         size: CGSize(width: body.photo.width, height: body.photo.height),
-                        createdAt: ISO8601DateFormatter().date(from: body.photo.createdAt ?? ""),
+                        createdAt: dateFormatter.isoDateFromString(from: body.photo.createdAt ?? ""),
                         welcomeDescription: body.photo.description ?? "",
                         thumbimageURL: body.photo.urls.thumb,
                         largeImageURL: body.photo.urls.full,

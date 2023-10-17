@@ -39,6 +39,7 @@
 		F0B99DAE2AD45CE8004A5E28 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B99DAD2AD45CE8004A5E28 /* AlertPresenter.swift */; };
 		F0B99DB02AD45DAD004A5E28 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B99DAF2AD45DAD004A5E28 /* AlertModel.swift */; };
 		F0B99DB22AD5DBE6004A5E28 /* CookieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B99DB12AD5DBE6004A5E28 /* CookieService.swift */; };
+		F0B99DB42ADEE323004A5E28 /* ImageFeedDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B99DB32ADEE323004A5E28 /* ImageFeedDateFormatter.swift */; };
 		F0C8BDD12A79733400CE3EEA /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C8BDD02A79733400CE3EEA /* UIColor+Extensions.swift */; };
 		F0C8BDD32A7980AC00CE3EEA /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C8BDD22A7980AC00CE3EEA /* ImagesListCell.swift */; };
 		F0C8BDD82A7ADFC900CE3EEA /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0C8BDD62A7ADFC800CE3EEA /* YS Display-Bold.ttf */; };
@@ -80,6 +81,7 @@
 		F0B99DAD2AD45CE8004A5E28 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		F0B99DAF2AD45DAD004A5E28 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 		F0B99DB12AD5DBE6004A5E28 /* CookieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieService.swift; sourceTree = "<group>"; };
+		F0B99DB32ADEE323004A5E28 /* ImageFeedDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFeedDateFormatter.swift; sourceTree = "<group>"; };
 		F0C8BDD02A79733400CE3EEA /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		F0C8BDD22A7980AC00CE3EEA /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		F0C8BDD62A7ADFC800CE3EEA /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				F0C8BDD02A79733400CE3EEA /* UIColor+Extensions.swift */,
 				F064B8652AA790DF00C009A9 /* URLRequest+Extensions.swift */,
 				F064B8672AA7938B00C009A9 /* URLSession+Extensions.swift */,
+				F0B99DB32ADEE323004A5E28 /* ImageFeedDateFormatter.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				F0B99DAB2AD34268004A5E28 /* SinglePhoto.swift in Sources */,
 				F064B8642AA7857500C009A9 /* OAuth2Service.swift in Sources */,
 				F017EC502A76693A00DF279F /* ImagesListViewController.swift in Sources */,
+				F0B99DB42ADEE323004A5E28 /* ImageFeedDateFormatter.swift in Sources */,
 				F017EC4C2A76693A00DF279F /* AppDelegate.swift in Sources */,
 				F064B8622AA783D800C009A9 /* OAuthTokenResponseBody.swift in Sources */,
 				F0B99DB22AD5DBE6004A5E28 /* CookieService.swift in Sources */,

@@ -14,31 +14,21 @@ protocol ImageListCellDelegate: AnyObject {
 
 class ImagesListCell: UITableViewCell {
     
+    static let reusedIdentifier = "imagesListCell"
+    
+    weak var delegate: ImageListCellDelegate?
+    
     @IBOutlet weak var cardImageView: UIImageView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet private weak var gradientView: UIView!
     @IBOutlet private weak var likeButton: UIButton!
     
-    static let reusedIdentifier = "ImagesListCell"
-    
-    weak var delegate: ImageListCellDelegate?
-    
     private var isGradientSet = false
-    
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMMM yyyy"
-        formatter.locale = Locale(identifier: "ru_RU")
-        return formatter
-    }()
+    private let dateFormatter = ImageFeedDateFormatter.shared
     
     override func prepareForReuse() {
         super.prepareForReuse()
         cardImageView.kf.cancelDownloadTask()
-    }
-    
-    @IBAction func likeButtonClicked(_ sender: Any) {
-        delegate?.imageListCellDidTapLike(self)
     }
     
     func setGradientBackground() {
@@ -59,18 +49,21 @@ class ImagesListCell: UITableViewCell {
             isGradientSet = true
         }
         cell.cardImageView.backgroundColor = .ypWhite.withAlphaComponent(0.5)
+        cell.likeButton.setTitle("", for: .normal)
         
         if let createdAt = createdAt {
-            cell.dateLabel.text = dateFormatter.string(from: createdAt)
-            print("date: \(dateFormatter.string(from: createdAt))")
+            cell.dateLabel.text = dateFormatter.dateString(from: createdAt)
         } else {
             cell.dateLabel.text = ""
         }
-        cell.likeButton.setTitle("", for: .normal)
     }
     
     func setIsLike(_ isFavourite: Bool) {
         let favouriteImage = isFavourite ? UIImage(named: "active") : UIImage(named: "noActive")
         likeButton.setImage(favouriteImage, for: .normal)
+    }
+    
+    @IBAction func likeButtonClicked(_ sender: Any) {
+        delegate?.imageListCellDidTapLike(self)
     }
 }

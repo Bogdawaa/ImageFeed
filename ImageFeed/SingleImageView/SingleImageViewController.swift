@@ -12,11 +12,11 @@ final class SingleImageViewController: UIViewController {
     
     var photo: Photo?
     
-    private var image: UIImage?
-    private let imageListService = ImageListService.shared
-    
     @IBOutlet private var singleImageView: UIImageView!
     @IBOutlet private weak var scrollView: UIScrollView!
+    
+    private var image: UIImage?
+    private let imageListService = ImageListService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,20 +30,6 @@ final class SingleImageViewController: UIViewController {
         
         guard let image = image else { return }
         rescaleAndCenterImageInScrollView(image: image)
-    }
-    
-    @IBAction private func didTapShareButton(_ sender: Any) {
-        guard let image = image else { return }
-        
-        let ac = UIActivityViewController(
-            activityItems: [image],
-            applicationActivities: nil
-        )
-        present(ac, animated: true, completion: nil)
-    }
-    
-    @IBAction private func didTapBackButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
     }
     
     private func setupImage(photo: Photo) {
@@ -104,6 +90,20 @@ final class SingleImageViewController: UIViewController {
         let x = (newContentSize.width - visibleRectSize.width) / 2
         let y = (newContentSize.height - visibleRectSize.height) / 2
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+    }
+    
+    @IBAction private func didTapShareButton(_ sender: Any) {
+        guard let image = image else { return }
+        
+        let ac = UIActivityViewController(
+            activityItems: [image],
+            applicationActivities: nil
+        )
+        present(ac, animated: true, completion: nil)
+    }
+    
+    @IBAction private func didTapBackButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
 }
 

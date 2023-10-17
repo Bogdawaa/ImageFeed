@@ -16,7 +16,7 @@ final class ImagesListViewController: UIViewController {
     private var alertPresenter: AlertPresenter?
     
     private var photos: [Photo] = []
-    private let ShowSingleImageSegueIdentifier = "ShowImage"
+    private let ShowSingleImageSegueIdentifier = "showImage"
     private let photoName: [String] = Array(0..<20).map{ "\($0)" }
     private let imageListService = ImageListService.shared
     
@@ -39,13 +39,13 @@ final class ImagesListViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ShowSingleImageSegueIdentifier {
-            let viewController  = segue.destination as! SingleImageViewController
-            let indexPath = sender as! IndexPath
-            viewController.photo = photos[indexPath.row]
-        } else {
-            super.prepare(for: segue, sender: sender)
+        guard segue.identifier == ShowSingleImageSegueIdentifier,
+            let viewController  = segue.destination as? SingleImageViewController,
+            let indexPath = sender as? IndexPath else {
+                super.prepare(for: segue, sender: sender)
+                return
         }
+        viewController.photo = photos[indexPath.row]
     }
     
     private func updateTableViewAnimated() {
