@@ -11,8 +11,12 @@ import SwiftKeychainWrapper
 
 final class SplashViewController: UIViewController {
     
-    private let identifier = "ShowAuthViewController"
+    private var alertPresenter: AlertPresenter?
+    
+    private let identifier = "showAuthViewController"
+    
     private let storage = OAuth2TokenStorage()
+    
     private let oAuth2Service = OAuth2Service.shared
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
@@ -26,6 +30,9 @@ final class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        alertPresenter = AlertPresenter(viewController: self)
+        
         view.backgroundColor = .ypBlack
         view.addSubview(logoImageView)
         
@@ -34,12 +41,14 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if storage.token != nil{
+        
+        guard UIBlockingProgressHUD.isShowing == false else { return }
+        if storage.token != nil {
             fetchProfile(token: storage.token!)
         }  else {
             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
             guard let authViewController = storyBoard.instantiateViewController(
-                withIdentifier: "AuthViewController") as? AuthViewController else { return }
+                withIdentifier: "authViewController") as? AuthViewController else { return }
             authViewController.delegate = self
             authViewController.modalPresentationStyle = .fullScreen
             present(authViewController, animated: true)
@@ -59,7 +68,7 @@ final class SplashViewController: UIViewController {
             return
         }
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(identifier: "TabBarController")
+            .instantiateViewController(identifier: "tabBarController")
         window.rootViewController = tabBarController
     }
     
@@ -94,10 +103,14 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.fetchProfile(token: token)
             case .failure:
                 UIBlockingProgressHUD.dismiss()
-                showErrorAlert { [weak self] _ in
-                    guard let self = self else { return }
-                    self.fetchOAuthToken(code: code)
-                }
+                let alertModel = AlertModel(
+                    title: "Что -то пошло не так(",
+                    message: "Не удалось войти в систему",
+                    buttonText: "Ок") { [weak self] in
+                        guard let self = self else { return }
+                        self.fetchOAuthToken(code: code)
+                    }
+                alertPresenter?.show(in: self, alertModel: alertModel)
                 break
             }
         }
@@ -112,10 +125,14 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.fetchProfileImageURL(username: profile.username)
             case .failure:
                 UIBlockingProgressHUD.dismiss()
-                showErrorAlert { [weak self] _ in
-                    guard let self = self else { return }
-                    self.fetchProfile(token: token)
-                }
+                let alertModel = AlertModel(
+                    title: "Что -то пошло не так(",
+                    message: "Не удалось войти в систему",
+                    buttonText: "Ок") { [weak self] in
+                        guard let self = self else { return }
+                        self.fetchProfile(token: token)
+                    }
+                alertPresenter?.show(in: self, alertModel: alertModel)
                 break
             }
         }
@@ -128,13 +145,16 @@ extension SplashViewController: AuthViewControllerDelegate {
             case .success:
                 self.showTabBarController()
             case .failure:
-                showErrorAlert { [weak self] _ in
-                    guard let self = self else { return }
-                    self.fetchProfileImageURL(username: username)
-                }
+                let alertModel = AlertModel(
+                    title: "Что -то пошло не так(",
+                    message: "Не удалось войти в систему",
+                    buttonText: "Ок") { [weak self] in
+                        guard let self = self else { return }
+                        self.fetchProfileImageURL(username: username)
+                    }
+                alertPresenter?.show(in: self, alertModel: alertModel)
                 break
             }
         }
-
     }
 }

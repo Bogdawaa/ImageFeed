@@ -20,10 +20,12 @@ struct UserResult: Codable {
 final class ProfileImageService {
     
     static let shared = ProfileImageService()
-    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "profileImageProviderDidChange")
     
     private (set) var avatarURL: String?
     private let urlSession = URLSession.shared
+    
+    private init() { }
 
     func fetchProfileImageURL(
         _ username: String,

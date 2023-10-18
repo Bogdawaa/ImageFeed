@@ -6,22 +6,30 @@
 //
 
 import UIKit
+import Kingfisher
+
+protocol ImageListCellDelegate: AnyObject {
+    func imageListCellDidTapLike(_ cell: ImagesListCell)
+}
 
 class ImagesListCell: UITableViewCell {
     
-    static let reusedIdentifier = "ImagesListCell"
-    private var isGradientSet = false
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    }()
+    static let reusedIdentifier = "imagesListCell"
     
-    @IBOutlet private weak var dateLabel: UILabel!
-    @IBOutlet private weak var cardImageView: UIImageView!  
+    weak var delegate: ImageListCellDelegate?
+    
+    @IBOutlet weak var cardImageView: UIImageView!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet private weak var gradientView: UIView!
-    @IBOutlet private weak var favouritesButton: UIButton!
+    @IBOutlet private weak var likeButton: UIButton!
+    
+    private var isGradientSet = false
+    private let dateFormatter = ImageFeedDateFormatter.shared
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cardImageView.kf.cancelDownloadTask()
+    }
     
     func setGradientBackground() {
         let colorTop =  UIColor(red: 0.1/255.0, green: 0.11/255.0, blue: 0.13/255.0, alpha: 0.0).cgColor
@@ -35,21 +43,27 @@ class ImagesListCell: UITableViewCell {
         cardImageView.addSubview(gradientView)
     }
     
-    func configCell(for cell: ImagesListCell, with index: IndexPath, photoName: String) {
-        guard let image = UIImage(named: photoName) else {
-            return
-        }
+    func configCell(for cell: ImagesListCell, with index: IndexPath, thumbURL: String, createdAt: Date?) {
         if isGradientSet == false {
             cell.setGradientBackground()
             isGradientSet = true
         }
-        cell.cardImageView.image = image
-        cell.dateLabel.text = dateFormatter.string(from: Date())
+        cell.cardImageView.backgroundColor = .ypWhite.withAlphaComponent(0.5)
+        cell.likeButton.setTitle("", for: .normal)
         
-        let isFavourite = index.row % 2 == 0
-        let favouriteImage = isFavourite ? UIImage(named: "noActive") : UIImage(named: "active")
-        
-        cell.favouritesButton.setImage(favouriteImage, for: .normal)
-        cell.favouritesButton.setTitle("", for: .normal)
+        if let createdAt = createdAt {
+            cell.dateLabel.text = dateFormatter.dateString(from: createdAt)
+        } else {
+            cell.dateLabel.text = ""
+        }
+    }
+    
+    func setIsLike(_ isFavourite: Bool) {
+        let favouriteImage = isFavourite ? UIImage(named: "active") : UIImage(named: "noActive")
+        likeButton.setImage(favouriteImage, for: .normal)
+    }
+    
+    @IBAction func likeButtonClicked(_ sender: Any) {
+        delegate?.imageListCellDidTapLike(self)
     }
 }

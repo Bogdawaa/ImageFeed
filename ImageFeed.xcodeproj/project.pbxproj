@@ -33,6 +33,13 @@
 		F064B8832AC07C5200C009A9 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F064B8822AC07C5200C009A9 /* TabBarController.swift */; };
 		F0B99D962AC48A27004A5E28 /* ImageListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B99D952AC48A27004A5E28 /* ImageListService.swift */; };
 		F0B99D982AC48D58004A5E28 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B99D972AC48D58004A5E28 /* Photo.swift */; };
+		F0B99D9A2AC4AFF2004A5E28 /* PhotoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B99D992AC4AFF2004A5E28 /* PhotoResult.swift */; };
+		F0B99D9C2AC4B0DA004A5E28 /* UrlsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B99D9B2AC4B0DA004A5E28 /* UrlsResult.swift */; };
+		F0B99DAB2AD34268004A5E28 /* SinglePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B99DAA2AD34267004A5E28 /* SinglePhoto.swift */; };
+		F0B99DAE2AD45CE8004A5E28 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B99DAD2AD45CE8004A5E28 /* AlertPresenter.swift */; };
+		F0B99DB02AD45DAD004A5E28 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B99DAF2AD45DAD004A5E28 /* AlertModel.swift */; };
+		F0B99DB22AD5DBE6004A5E28 /* CookieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B99DB12AD5DBE6004A5E28 /* CookieService.swift */; };
+		F0B99DB42ADEE323004A5E28 /* ImageFeedDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B99DB32ADEE323004A5E28 /* ImageFeedDateFormatter.swift */; };
 		F0C8BDD12A79733400CE3EEA /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C8BDD02A79733400CE3EEA /* UIColor+Extensions.swift */; };
 		F0C8BDD32A7980AC00CE3EEA /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C8BDD22A7980AC00CE3EEA /* ImagesListCell.swift */; };
 		F0C8BDD82A7ADFC900CE3EEA /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0C8BDD62A7ADFC800CE3EEA /* YS Display-Bold.ttf */; };
@@ -68,6 +75,13 @@
 		F064B8822AC07C5200C009A9 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		F0B99D952AC48A27004A5E28 /* ImageListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListService.swift; sourceTree = "<group>"; };
 		F0B99D972AC48D58004A5E28 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		F0B99D992AC4AFF2004A5E28 /* PhotoResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResult.swift; sourceTree = "<group>"; };
+		F0B99D9B2AC4B0DA004A5E28 /* UrlsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlsResult.swift; sourceTree = "<group>"; };
+		F0B99DAA2AD34267004A5E28 /* SinglePhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePhoto.swift; sourceTree = "<group>"; };
+		F0B99DAD2AD45CE8004A5E28 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
+		F0B99DAF2AD45DAD004A5E28 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
+		F0B99DB12AD5DBE6004A5E28 /* CookieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieService.swift; sourceTree = "<group>"; };
+		F0B99DB32ADEE323004A5E28 /* ImageFeedDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFeedDateFormatter.swift; sourceTree = "<group>"; };
 		F0C8BDD02A79733400CE3EEA /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		F0C8BDD22A7980AC00CE3EEA /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		F0C8BDD62A7ADFC800CE3EEA /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
@@ -110,6 +124,7 @@
 		F017EC4A2A76693A00DF279F /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				F0B99DAC2AD45CD1004A5E28 /* AlertPresenter */,
 				F0B99D942AC48A08004A5E28 /* ImageListService */,
 				F064B8752ABA13EE00C009A9 /* ProfileService */,
 				F064B86D2AAA326900C009A9 /* OAuth */,
@@ -117,16 +132,17 @@
 				F064B85C2AA3D33700C009A9 /* Auth */,
 				F064B8592A9537C700C009A9 /* SingleImageView */,
 				F064B8582A9537AD00C009A9 /* ProfileView */,
+				F0C8BDD42A7980CF00CE3EEA /* ImagesList */,
 				F0C8BDCF2A79731900CE3EEA /* Helpers */,
 				F017EC4B2A76693A00DF279F /* AppDelegate.swift */,
 				F017EC4D2A76693A00DF279F /* SceneDelegate.swift */,
-				F0C8BDD42A7980CF00CE3EEA /* ImagesList */,
 				F017EC512A76693A00DF279F /* Main.storyboard */,
 				F017EC592A76693D00DF279F /* Info.plist */,
 				F0C8BD832A768B7B00CE3EEA /* Resources */,
 				F064B85A2AA3C87300C009A9 /* Constants.swift */,
 				F064B8712AB7695900C009A9 /* UIBlockingProgressHUD.swift */,
 				F064B8822AC07C5200C009A9 /* TabBarController.swift */,
+				F0B99DB12AD5DBE6004A5E28 /* CookieService.swift */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
@@ -190,8 +206,20 @@
 			children = (
 				F0B99D952AC48A27004A5E28 /* ImageListService.swift */,
 				F0B99D972AC48D58004A5E28 /* Photo.swift */,
+				F0B99D992AC4AFF2004A5E28 /* PhotoResult.swift */,
+				F0B99D9B2AC4B0DA004A5E28 /* UrlsResult.swift */,
+				F0B99DAA2AD34267004A5E28 /* SinglePhoto.swift */,
 			);
 			path = ImageListService;
+			sourceTree = "<group>";
+		};
+		F0B99DAC2AD45CD1004A5E28 /* AlertPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				F0B99DAD2AD45CE8004A5E28 /* AlertPresenter.swift */,
+				F0B99DAF2AD45DAD004A5E28 /* AlertModel.swift */,
+			);
+			path = AlertPresenter;
 			sourceTree = "<group>";
 		};
 		F0C8BD832A768B7B00CE3EEA /* Resources */ = {
@@ -210,6 +238,7 @@
 				F0C8BDD02A79733400CE3EEA /* UIColor+Extensions.swift */,
 				F064B8652AA790DF00C009A9 /* URLRequest+Extensions.swift */,
 				F064B8672AA7938B00C009A9 /* URLSession+Extensions.swift */,
+				F0B99DB32ADEE323004A5E28 /* ImageFeedDateFormatter.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -323,13 +352,18 @@
 				F064B8602AA3D4D400C009A9 /* WebViewViewController.swift in Sources */,
 				F064B8832AC07C5200C009A9 /* TabBarController.swift in Sources */,
 				F0E746B42A88977E003CD450 /* ProfileViewController.swift in Sources */,
+				F0B99DAB2AD34268004A5E28 /* SinglePhoto.swift in Sources */,
 				F064B8642AA7857500C009A9 /* OAuth2Service.swift in Sources */,
 				F017EC502A76693A00DF279F /* ImagesListViewController.swift in Sources */,
+				F0B99DB42ADEE323004A5E28 /* ImageFeedDateFormatter.swift in Sources */,
 				F017EC4C2A76693A00DF279F /* AppDelegate.swift in Sources */,
 				F064B8622AA783D800C009A9 /* OAuthTokenResponseBody.swift in Sources */,
+				F0B99DB22AD5DBE6004A5E28 /* CookieService.swift in Sources */,
 				F0E746B62A8B2512003CD450 /* SingleImageViewController.swift in Sources */,
+				F0B99D9A2AC4AFF2004A5E28 /* PhotoResult.swift in Sources */,
 				F0C8BDD32A7980AC00CE3EEA /* ImagesListCell.swift in Sources */,
 				F017EC4E2A76693A00DF279F /* SceneDelegate.swift in Sources */,
+				F0B99DAE2AD45CE8004A5E28 /* AlertPresenter.swift in Sources */,
 				F0C8BDD12A79733400CE3EEA /* UIColor+Extensions.swift in Sources */,
 				F064B8742AB77E5C00C009A9 /* ProfileService.swift in Sources */,
 				F064B85E2AA3D34A00C009A9 /* AuthViewController.swift in Sources */,
@@ -340,6 +374,8 @@
 				F064B8772ABA142700C009A9 /* Profile.swift in Sources */,
 				F064B86C2AA9080F00C009A9 /* SplashViewController.swift in Sources */,
 				F064B8792ABA146C00C009A9 /* ProfileResult.swift in Sources */,
+				F0B99DB02AD45DAD004A5E28 /* AlertModel.swift in Sources */,
+				F0B99D9C2AC4B0DA004A5E28 /* UrlsResult.swift in Sources */,
 				F064B8722AB7695A00C009A9 /* UIBlockingProgressHUD.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

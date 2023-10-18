@@ -17,10 +17,10 @@ final class WebViewViewController: UIViewController {
     
     weak var delegate: WebViewViewControllerDelegate?
     
-    private var estimatedProgressObservation: NSKeyValueObservation?
-    
     @IBOutlet private weak var progressView: UIProgressView!
     @IBOutlet private weak var webView: WKWebView!
+    
+    private var estimatedProgressObservation: NSKeyValueObservation?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -57,10 +57,6 @@ final class WebViewViewController: UIViewController {
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
     }
     
-    @IBAction private func didTapBackButton(_ sender: Any) {
-        delegate?.webViewViewControllerDidCancel(self)
-    }
-    
     private func code(from navigationAction: WKNavigationAction) -> String? {
         if
             let url = navigationAction.request.url,
@@ -73,6 +69,10 @@ final class WebViewViewController: UIViewController {
         } else {
             return nil
         }
+    }
+    
+    @IBAction private func didTapBackButton(_ sender: Any) {
+        delegate?.webViewViewControllerDidCancel(self)
     }
 }
 

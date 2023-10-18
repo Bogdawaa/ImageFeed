@@ -15,10 +15,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--TabBarViewController-->
+        <!--tabBarViewController-->
         <scene sceneID="PdZ-d4-7BN">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarController" title="TabBarViewController" id="3o7-FY-Uv4" customClass="TabBarController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabBarController" title="tabBarViewController" id="3o7-FY-Uv4" customClass="TabBarController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="WfH-L8-6x7">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -36,10 +36,10 @@
             </objects>
             <point key="canvasLocation" x="-860" y="-358"/>
         </scene>
-        <!--ImageList-->
+        <!--imageList-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="ImageListViewController" title="ImageList" id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="imageListViewController" title="imageList" id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -48,7 +48,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <color key="backgroundColor" name="YPBlack"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="115" id="u6u-h2-mE7" customClass="ImagesListCell" customModule="ImageFeed" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="imagesListCell" rowHeight="115" id="u6u-h2-mE7" customClass="ImagesListCell" customModule="ImageFeed" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="393" height="115"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="u6u-h2-mE7" id="Dzc-0S-cq8">
@@ -85,6 +85,9 @@
                                                     </constraints>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="active"/>
+                                                    <connections>
+                                                        <action selector="likeButtonClicked:" destination="u6u-h2-mE7" eventType="touchUpInside" id="wO7-pT-XAL"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -106,8 +109,8 @@
                                         <connections>
                                             <outlet property="cardImageView" destination="o4e-Ld-CEl" id="Gr6-HO-1XH"/>
                                             <outlet property="dateLabel" destination="AEX-u5-uLO" id="7ao-9T-aCo"/>
-                                            <outlet property="favouritesButton" destination="TCg-Ls-Ewt" id="pSl-AT-XL2"/>
                                             <outlet property="gradientView" destination="3Z4-gb-h1J" id="e2t-ax-oLC"/>
+                                            <outlet property="likeButton" destination="TCg-Ls-Ewt" id="pSl-AT-XL2"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -130,7 +133,7 @@
                     <navigationItem key="navigationItem" id="nQt-4O-IqG"/>
                     <connections>
                         <outlet property="tableView" destination="Bxj-RJ-rMg" id="DEh-Hj-c1v"/>
-                        <segue destination="LkZ-MB-vtq" kind="presentation" identifier="ShowImage" id="bjF-aS-ior"/>
+                        <segue destination="LkZ-MB-vtq" kind="presentation" identifier="showImage" id="bjF-aS-ior"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -149,19 +152,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="414" insetsLayoutMarginsFromSafeArea="NO" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="BED-Df-020">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="BED-Df-020" firstAttribute="leading" secondItem="gF3-2R-6G9" secondAttribute="leading" id="5qr-mC-dCi"/>
-                                    <constraint firstItem="gF3-2R-6G9" firstAttribute="trailing" secondItem="BED-Df-020" secondAttribute="trailing" id="HdT-Se-pRI"/>
-                                    <constraint firstItem="gF3-2R-6G9" firstAttribute="bottom" secondItem="BED-Df-020" secondAttribute="bottom" id="Ng7-cq-j1t"/>
                                     <constraint firstAttribute="trailing" secondItem="BED-Df-020" secondAttribute="trailing" id="VXK-im-ihf"/>
                                     <constraint firstItem="BED-Df-020" firstAttribute="leading" secondItem="SMd-ro-HAL" secondAttribute="leading" id="bWe-J8-FAt"/>
                                     <constraint firstItem="BED-Df-020" firstAttribute="top" secondItem="SMd-ro-HAL" secondAttribute="top" id="dd4-xQ-gN7"/>
-                                    <constraint firstAttribute="trailing" secondItem="BED-Df-020" secondAttribute="trailing" id="fu0-Xl-suY"/>
                                     <constraint firstAttribute="bottom" secondItem="BED-Df-020" secondAttribute="bottom" id="s4K-Hp-AqU"/>
-                                    <constraint firstItem="BED-Df-020" firstAttribute="top" secondItem="gF3-2R-6G9" secondAttribute="top" id="zdV-EC-mjr"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="dbF-rb-3pJ"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="gF3-2R-6G9"/>
@@ -220,7 +218,7 @@
         <!--AuthViewController-->
         <scene sceneID="Xzs-l0-m26">
             <objects>
-                <viewController storyboardIdentifier="AuthViewController" title="AuthViewController" id="97G-Iy-1Ti" customClass="AuthViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="authViewController" title="AuthViewController" id="97G-Iy-1Ti" customClass="AuthViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ESd-8e-nkc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -249,7 +247,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="AOa-CD-KJm" kind="presentation" identifier="ShowWebView" modalPresentationStyle="overFullScreen" id="7Be-JE-bjS"/>
+                                    <segue destination="AOa-CD-KJm" kind="presentation" identifier="showWebView" modalPresentationStyle="overFullScreen" id="7Be-JE-bjS"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -269,10 +267,10 @@
             </objects>
             <point key="canvasLocation" x="-28" y="375"/>
         </scene>
-        <!--WebViewViewController-->
+        <!--webViewViewController-->
         <scene sceneID="eeW-HN-kw1">
             <objects>
-                <viewController title="WebViewViewController" id="AOa-CD-KJm" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="webViewViewController" id="AOa-CD-KJm" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FMn-20-Pym">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -328,7 +326,7 @@
         <!--Navigation Controller-->
         <scene sceneID="694-hN-GIV">
             <objects>
-                <navigationController storyboardIdentifier="NavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Ine-Eg-JSQ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="navigationController" automaticallyAdjustsScrollViewInsets="NO" id="Ine-Eg-JSQ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Bef-pM-uSn">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>

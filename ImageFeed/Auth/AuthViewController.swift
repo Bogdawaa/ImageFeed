@@ -15,7 +15,7 @@ final class AuthViewController: UIViewController {
     
     weak var delegate: AuthViewControllerDelegate?
     
-    private let identifier = "ShowWebView"
+    private let identifier = "showWebView"
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == identifier {
