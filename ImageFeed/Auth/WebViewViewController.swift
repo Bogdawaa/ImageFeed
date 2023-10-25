@@ -31,30 +31,22 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     
     private var estimatedProgressObservation: NSKeyValueObservation?
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == #keyPath(WKWebView.estimatedProgress) {
-            presenter?.didUpdateProgressValue(webView.estimatedProgress)
-        } else {
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-        }
-    }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//        estimatedProgressObservation = webView.observe(
-//            \.estimatedProgress,
-//             changeHandler: { [weak self] _, _ in
-//                 guard let self = self else { return }
-//                 presenter?.didUpdateProgressValue(webView.estimatedProgress)
-//             })
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         webView.navigationDelegate = self
         presenter?.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        estimatedProgressObservation = webView.observe(
+            \.estimatedProgress,
+             changeHandler: { [weak self] _, _ in
+                 guard let self = self else { return }
+                 self.presenter?.didUpdateProgressValue(webView.estimatedProgress)
+             })
     }
     
     func load(request: URLRequest) {

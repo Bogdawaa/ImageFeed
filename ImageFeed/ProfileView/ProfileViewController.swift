@@ -8,15 +8,18 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewVontroller: UIViewController {
+public protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfilePresenterProtocol? { get set }
+    func updateProfile(with profile: Profile)
+    func updateAvatar(with url: URL)
+}
+
+final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
     
-    private let token = OAuth2TokenStorage().token
-    private let profileService = ProfileService.shared
-    private let profileImageService = ProfileImageService.shared
+    var presenter: ProfilePresenterProtocol?
     
     private var profileImageServiceObserver: NSObjectProtocol?
-    private var profile: Profile?
-    
+
     private lazy var profileImageView: UIImageView = {
         let image = UIImage(named: "profilePhoto")
         let imageView = UIImageView(image: image)
@@ -61,19 +64,17 @@ final class ProfileViewVontroller: UIViewController {
     }()
     
     override func viewDidLoad() {
-        view.backgroundColor = .ypBlack
+        super.viewDidLoad()
         
         view.addSubview(profileImageView)
         view.addSubview(profileNameLabel)
         view.addSubview(profileLoginNameLabel)
         view.addSubview(profileBioLabel)
         view.addSubview(exitButton)
+        view.backgroundColor = .ypBlack
         
         applyConstraints()
-
-        if let profile = profileService.profile {
-            updateProfile(with: profile)
-        }
+        presenter?.viewDidLoad()
         
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.didChangeNotification,
@@ -81,15 +82,17 @@ final class ProfileViewVontroller: UIViewController {
             queue: .main
             ) { [weak self] _ in
                 guard let self = self else { return }
-                self.updateAvatar()
+                self.presenter?.didUpdateAvatar()
             }
-        updateAvatar()
     }
     
-    private func updateAvatar() {
-        guard let avatarURL = ProfileImageService.shared.avatarURL,
-              let url = URL(string: avatarURL)
-        else { return }
+    func updateProfile(with profile: Profile) {
+        profileNameLabel.text = profile.name
+        profileLoginNameLabel.text = profile.loginName
+        profileBioLabel.text = profile.bio
+    }
+    
+    func updateAvatar(with url: URL) {
         let processor = RoundCornerImageProcessor(cornerRadius: 20, backgroundColor: .ypBlack)
         profileImageView.kf.indicatorType = .activity
         profileImageView.kf.setImage(
@@ -132,12 +135,6 @@ final class ProfileViewVontroller: UIViewController {
         NSLayoutConstraint.activate(profileNicknameConstraints)
         NSLayoutConstraint.activate(profileMessageConstraints)
         NSLayoutConstraint.activate(exitButtonConstraints)
-    }
-    
-    private func updateProfile(with profile: Profile) {
-        profileNameLabel.text = profile.name
-        profileLoginNameLabel.text = profile.loginName
-        profileBioLabel.text = profile.bio
     }
     
     @objc private func exitButtonClicked() {
