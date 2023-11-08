@@ -18,13 +18,56 @@ class ImagesListCell: UITableViewCell {
     
     weak var delegate: ImageListCellDelegate?
     
-    @IBOutlet weak var cardImageView: UIImageView!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet private weak var gradientView: UIView!
-    @IBOutlet private weak var likeButton: UIButton!
-    
     private var isGradientSet = false
     private let dateFormatter = ImageFeedDateFormatter.shared
+    
+    let dateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .ypWhite
+        label.text = "fasfo"
+        label.font = UIFont(name: "YS Regular", size: 13)
+        return label
+    }()
+    
+    let cardImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 16
+        return imageView
+    }()
+    
+    private let gradientView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    private lazy var likeButton: UIButton = {
+        let btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.titleLabel?.text = ""
+        btn.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+        return btn
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        contentView.backgroundColor = .ypBlack
+        contentView.addSubview(cardImageView)
+        contentView.addSubview(dateLabel)
+        contentView.addSubview(gradientView)
+        contentView.addSubview(likeButton)
+        applyConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -61,6 +104,35 @@ class ImagesListCell: UITableViewCell {
     func setIsLike(_ isFavourite: Bool) {
         let favouriteImage = isFavourite ? UIImage(named: "active") : UIImage(named: "noActive")
         likeButton.setImage(favouriteImage, for: .normal)
+    }
+    
+    private func applyConstraints() {
+        let cardImageViewConstraints = [
+            cardImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            cardImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
+            cardImageView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+            cardImageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8)
+        ]
+        let gradientViewConstraints = [
+            gradientView.heightAnchor.constraint(equalToConstant: 30),
+            gradientView.leadingAnchor.constraint(equalTo: cardImageView.leadingAnchor),
+            gradientView.trailingAnchor.constraint(equalTo: cardImageView.trailingAnchor),
+            gradientView.bottomAnchor.constraint(equalTo: cardImageView.bottomAnchor)
+        ]
+        let dateLabelConstraints = [
+            dateLabel.leadingAnchor.constraint(equalTo: cardImageView.leadingAnchor, constant: 8),
+            dateLabel.bottomAnchor.constraint(equalTo: cardImageView.bottomAnchor, constant: -8)
+        ]
+        let likeButtonConstraints = [
+            likeButton.heightAnchor.constraint(equalToConstant: 44),
+            likeButton.widthAnchor.constraint(equalToConstant: 44),
+            likeButton.trailingAnchor.constraint(equalTo: cardImageView.trailingAnchor),
+            likeButton.topAnchor.constraint(equalTo: cardImageView.topAnchor)
+        ]
+        NSLayoutConstraint.activate(cardImageViewConstraints)
+        NSLayoutConstraint.activate(dateLabelConstraints)
+        NSLayoutConstraint.activate(gradientViewConstraints)
+        NSLayoutConstraint.activate(likeButtonConstraints)
     }
     
     @IBAction func likeButtonClicked(_ sender: Any) {

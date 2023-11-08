@@ -15,7 +15,6 @@ class ProfilePresenterSpy: ProfilePresenterProtocol {
     
     func viewDidLoad() {
         viewDidLoadCalled = true
-        
     }
     
     func didUpdateProfile(with profile: Profile) {

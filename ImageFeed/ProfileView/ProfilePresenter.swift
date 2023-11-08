@@ -11,7 +11,6 @@ public protocol ProfilePresenterProtocol {
     var view: ProfileViewControllerProtocol? { get set }
     func viewDidLoad()
     func didUpdateAvatar()
-    func didUpdateProfile(with profile: Profile)
 }
 
 class ProfilePresenter: ProfilePresenterProtocol {
@@ -21,20 +20,16 @@ class ProfilePresenter: ProfilePresenterProtocol {
 
 
     func viewDidLoad() {
-        if let profile = profileService.profile {
-            didUpdateProfile(with: profile)
-        }
+        didUpdateProfile()
         didUpdateAvatar()
     }
 
-    func didUpdateProfile(with profile: Profile) {
-        view?.updateProfile(with: profile)
-    }
-
     func didUpdateAvatar() {
-        guard let avatarURL = ProfileImageService.shared.avatarURL,
-              let url = URL(string: avatarURL)
-        else { return }
-        view?.updateAvatar(with: url)
+        view?.updateAvatar()
+    }
+    
+    private func didUpdateProfile() {
+        guard let profile = profileService.profile else { return }
+        view?.updateProfile(with: profile)
     }
 }

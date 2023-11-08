@@ -11,7 +11,7 @@ import Kingfisher
 public protocol ProfileViewControllerProtocol: AnyObject {
     var presenter: ProfilePresenterProtocol? { get set }
     func updateProfile(with profile: Profile)
-    func updateAvatar(with url: URL)
+    func updateAvatar()
 }
 
 final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
@@ -92,7 +92,10 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         profileBioLabel.text = profile.bio
     }
     
-    func updateAvatar(with url: URL) {
+    func updateAvatar() {
+        guard let avatarURL = ProfileImageService.shared.avatarURL,
+              let url = URL(string: avatarURL)
+        else { return }
         let processor = RoundCornerImageProcessor(cornerRadius: 20, backgroundColor: .ypBlack)
         profileImageView.kf.indicatorType = .activity
         profileImageView.kf.setImage(

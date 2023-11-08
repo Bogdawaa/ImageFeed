@@ -37,6 +37,6 @@ final class ProfileViewTests: XCTestCase {
         presenter.viewDidLoad()
 
         //then
-        XCTAssertTrue(vc.updateProfileCalled)
+        XCTAssertTrue(vc.updateAvatarCalled)
     }
 }
