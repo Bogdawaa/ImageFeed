@@ -12,9 +12,9 @@ final class TabBarController: UITabBarController{
         super.awakeFromNib()
         
         let imageListViewController = ImagesListViewController()
-//        let imageListPresenter = ImageListPresenter()
-//        imageListVC.presenter = imageListPresenter
-//        imageListPresenter.view = imageListVC
+        let imageListPresenter = ImageListPresenter()
+        imageListViewController.presenter = imageListPresenter
+        imageListPresenter.view = imageListViewController
         
         imageListViewController.tabBarItem = UITabBarItem(
             title: nil,

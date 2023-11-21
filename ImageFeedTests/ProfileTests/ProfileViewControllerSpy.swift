@@ -12,12 +12,17 @@ class ProfileViewControllerSpy: ProfileViewControllerProtocol {
     
     var presenter: ImageFeed.ProfilePresenterProtocol?
     var updateAvatarCalled = false
+    var updateProfileCalled = false
+    var avatarURL: URL!
+    var profile: Profile!
     
-    func updateAvatar() {
+    func updateAvatar(url: URL) {
         updateAvatarCalled = true
+        self.avatarURL = url
     }
     
     func updateProfile(with profile: ImageFeed.Profile) {
-        //
+        updateProfileCalled = true
+        self.profile = profile
     }
 }

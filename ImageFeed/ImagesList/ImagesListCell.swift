@@ -40,9 +40,20 @@ class ImagesListCell: UITableViewCell {
     }()
     
     private let gradientView: UIView = {
-        let view = UIView()
+        let screenSize: CGRect = UIScreen.main.bounds
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 9_999_999_999_999, height: 30))
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = true
+        NSLayoutConstraint.activate([
+            view.heightAnchor.constraint(equalToConstant: 30)
+        ])
+
+        let bottomImageGradient = CAGradientLayer()
+        let colorTop =  UIColor(red: 0.1/255.0, green: 0.11/255.0, blue: 0.13/255.0, alpha: 0.0).cgColor
+        let colorBottom = UIColor(red: 0.1/255.0, green: 0.11/255.0, blue: 0.13/255.0, alpha: 0.2).cgColor
+        bottomImageGradient.frame = view.bounds
+        bottomImageGradient.colors = [colorTop, colorBottom]
+        bottomImageGradient.locations = [0.0, 1.0]
+        view.layer.insertSublayer(bottomImageGradient, at: 0)
         return view
     }()
     
@@ -51,6 +62,7 @@ class ImagesListCell: UITableViewCell {
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.titleLabel?.text = ""
         btn.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+        btn.accessibilityIdentifier = "likeButton"
         return btn
     }()
     
@@ -59,8 +71,8 @@ class ImagesListCell: UITableViewCell {
         
         contentView.backgroundColor = .ypBlack
         contentView.addSubview(cardImageView)
+        cardImageView.addSubview(gradientView)
         contentView.addSubview(dateLabel)
-        contentView.addSubview(gradientView)
         contentView.addSubview(likeButton)
         applyConstraints()
     }
@@ -74,26 +86,10 @@ class ImagesListCell: UITableViewCell {
         cardImageView.kf.cancelDownloadTask()
     }
     
-    func setGradientBackground() {
-        let colorTop =  UIColor(red: 0.1/255.0, green: 0.11/255.0, blue: 0.13/255.0, alpha: 0.0).cgColor
-        let colorBottom = UIColor(red: 0.1/255.0, green: 0.11/255.0, blue: 0.13/255.0, alpha: 0.2).cgColor
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [colorTop, colorBottom]
-        gradientLayer.locations = [0.0, 1.0]
-        gradientLayer.frame = self.gradientView.bounds
-        
-        self.gradientView.layer.insertSublayer(gradientLayer, at:0)
-        cardImageView.addSubview(gradientView)
-    }
-    
     func configCell(for cell: ImagesListCell, with index: IndexPath, thumbURL: String, createdAt: Date?) {
-        if isGradientSet == false {
-            cell.setGradientBackground()
-            isGradientSet = true
-        }
         cell.cardImageView.backgroundColor = .ypWhite.withAlphaComponent(0.5)
         cell.likeButton.setTitle("", for: .normal)
-        
+        cell.likeButton.isEnabled = true
         if let createdAt = createdAt {
             cell.dateLabel.text = dateFormatter.dateString(from: createdAt)
         } else {
@@ -114,7 +110,6 @@ class ImagesListCell: UITableViewCell {
             cardImageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8)
         ]
         let gradientViewConstraints = [
-            gradientView.heightAnchor.constraint(equalToConstant: 30),
             gradientView.leadingAnchor.constraint(equalTo: cardImageView.leadingAnchor),
             gradientView.trailingAnchor.constraint(equalTo: cardImageView.trailingAnchor),
             gradientView.bottomAnchor.constraint(equalTo: cardImageView.bottomAnchor)

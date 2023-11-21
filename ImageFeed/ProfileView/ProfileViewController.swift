@@ -11,15 +11,13 @@ import Kingfisher
 public protocol ProfileViewControllerProtocol: AnyObject {
     var presenter: ProfilePresenterProtocol? { get set }
     func updateProfile(with profile: Profile)
-    func updateAvatar()
+    func updateAvatar(url: URL)
 }
 
 final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
     
     var presenter: ProfilePresenterProtocol?
     
-    private var profileImageServiceObserver: NSObjectProtocol?
-
     private lazy var profileImageView: UIImageView = {
         let image = UIImage(named: "profilePhoto")
         let imageView = UIImageView(image: image)
@@ -30,6 +28,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     private lazy var profileNameLabel: UILabel = {
         let label = UILabel()
         label.text = ""
+        label.accessibilityIdentifier = "profileNameLabel"
         label.font = .systemFont(ofSize: 23, weight: .bold)
         label.textColor = .ypWhite
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -39,6 +38,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     private lazy var profileLoginNameLabel: UILabel = {
         let label = UILabel()
         label.text = ""
+        label.accessibilityIdentifier = "profileLoginNameLabel"
         label.font = .systemFont(ofSize: 13, weight: .regular)
         label.textColor = .ypGray
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -57,6 +57,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     private lazy var exitButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("", for: .normal)
+        btn.accessibilityIdentifier = "exitButton"
         btn.setImage(UIImage(named: "exit"), for: .normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: Selector(("exitButtonClicked")), for: .touchUpInside)
@@ -75,15 +76,6 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         
         applyConstraints()
         presenter?.viewDidLoad()
-        
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.didChangeNotification,
-            object: nil,
-            queue: .main
-            ) { [weak self] _ in
-                guard let self = self else { return }
-                self.presenter?.didUpdateAvatar()
-            }
     }
     
     func updateProfile(with profile: Profile) {
@@ -92,10 +84,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         profileBioLabel.text = profile.bio
     }
     
-    func updateAvatar() {
-        guard let avatarURL = ProfileImageService.shared.avatarURL,
-              let url = URL(string: avatarURL)
-        else { return }
+    func updateAvatar(url: URL) {
         let processor = RoundCornerImageProcessor(cornerRadius: 20, backgroundColor: .ypBlack)
         profileImageView.kf.indicatorType = .activity
         profileImageView.kf.setImage(

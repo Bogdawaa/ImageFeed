@@ -25,18 +25,42 @@ final class ProfileViewTests: XCTestCase {
         XCTAssertTrue(presenter.viewDidLoadCalled)
     }
     
-    func testPresenterCallsUpdateProfile() {
+    func testUpdateAvatar() {
         //given
         let vc = ProfileViewControllerSpy()
         let presenter = ProfilePresenter()
+        let url = URL(string: "photo.ru")
 
         vc.presenter = presenter
         presenter.view = vc
 
         //when
-        presenter.viewDidLoad()
+        vc.updateAvatar(url: url!)
 
         //then
         XCTAssertTrue(vc.updateAvatarCalled)
+        XCTAssertEqual(vc.avatarURL, url)
+    }
+    
+    func testUpdateProfile() {
+        //given
+        let vc = ProfileViewControllerSpy()
+        let presenter = ProfilePresenter()
+        let profile = Profile(
+            username: "username",
+            firstName: "Bogdan",
+            lastName: "Fartdinov",
+            bio: "bio"
+        )
+
+        vc.presenter = presenter
+        presenter.view = vc
+
+        //when
+        vc.updateProfile(with: profile)
+
+        //then
+        XCTAssertTrue(vc.updateProfileCalled)
+        XCTAssertEqual(vc.profile.name, profile.name)
     }
 }

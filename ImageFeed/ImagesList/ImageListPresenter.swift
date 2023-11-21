@@ -8,26 +8,46 @@
 import Foundation
 import UIKit
 
-protocol ImageListPresenterDelegate: AnyObject {
-    func presentPhotos(photos: [Photo])
-    func updateRow(indexPath: IndexPath)
-    func showAlert(alertModel: AlertModel)
+protocol ImageListPresenterProtocol {
+    var view: ImageListViewProtocol? { get set }
+    var photosInStorageCount: Int { get }
+    func didLoad()
     func fetchPhotosNextPage()
-//    func didImageListCellTapLike(indexPath: IndexPath, cell: ImagesListCell, photo: Photo)
+    func presentPhotos()
+    func setPhoto(photo: Photo)
+    func setIndex(indexPath: IndexPath)
+    func imageListCellDidTapLike(_ cell: ImagesListCell)
 }
 
-class ImageListPresenter {
+class ImageListPresenter: ImageListPresenterProtocol {
     
-    // MARK: public
-    weak var presenterDelegate: ImageListPresenterDelegate?
+    // MARK: - public
+    weak var view: ImageListViewProtocol?
     
-    // MARK: private
+    var photosInStorageCount: Int {
+        return imageListService.photos.count
+    }
+    
+    // MARK: - private
     private let imageListService = ImageListService.shared
-    private var photos: [Photo] = []
+    private var imageListServiceObserver: NSObjectProtocol?
+
+    private var photos: [Photo]
     
-    // MARK: public methods
-    public func setDelegate(delegate: ImageListPresenterDelegate) {
-        self.presenterDelegate = delegate
+    private var indexPath: IndexPath?
+    private var photo: Photo?
+    
+    // MARK: - init
+    init(photos: [Photo] = ImageListService.shared.getPhotos()) {
+        self.photos = photos
+    }
+    
+    // MARK: - public methods
+    
+    public func didLoad() {
+        updateTableSubcription()
+        imageListService.fetchPhotosNextPage()
+        view?.presentPhotos(photos: imageListService.getPhotos())
     }
     
     public func fetchPhotosNextPage() {
@@ -35,11 +55,15 @@ class ImageListPresenter {
     }
     
     public func presentPhotos() {
-        self.presenterDelegate?.presentPhotos(photos: imageListService.photos)
+        view?.presentPhotos(photos: imageListService.getPhotos())
     }
     
-    public func didImageListCellTapLike(indexPath: IndexPath, cell: ImagesListCell, photo: Photo) {
+    public func imageListCellDidTapLike(_ cell: ImagesListCell) {
         UIBlockingProgressHUD.show()
+        
+        guard let indexPath = indexPath else { return }
+        guard let photo = photo else { return }
+        
         imageListService.changeLike(
             photoId: photo.id,
             isLike: !photo.isLiked) { [weak self] result in
@@ -48,17 +72,44 @@ class ImageListPresenter {
                 case .success:
                     UIBlockingProgressHUD.dismiss()
                     photos = imageListService.photos
-                    presenterDelegate?.presentPhotos(photos: photos)
+                    view?.presentPhotos(photos: photos)
                     cell.setIsLike(photo.isLiked)
-                    presenterDelegate?.updateRow(indexPath: indexPath)
+                    view?.updateRow(indexPath: indexPath)
                 case .failure(let error):
                     UIBlockingProgressHUD.dismiss()
                     let alertModel = AlertModel(
                         title: "Ошибка",
                         message: "Возникла ошибка: \(error.localizedDescription)",
                         buttonText: "Ok") { return }
-                    presenterDelegate?.showAlert(alertModel: alertModel)
+                    view?.showAlert(alertModel: alertModel)
                     break
+                }
+            }
+    }
+    
+    public func setIndex(indexPath: IndexPath) {
+        self.indexPath = indexPath
+    }
+    
+    public func setPhoto(photo: Photo) {
+        self.photo = photo
+    }
+
+    private func updateTableSubcription() {
+        imageListServiceObserver = NotificationCenter.default.addObserver(
+            forName: ImageListService.didChangeNotification,
+            object: nil,
+            queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                
+                let oldPhotosCount = self.photos.count
+                let imageListServicePhotosCount = self.photosInStorageCount
+                self.photos = imageListService.getPhotos()
+                view?.presentPhotos(photos: photos)
+                
+                if oldPhotosCount != imageListServicePhotosCount {
+                    view?.updateTableViewAnimated(indexes: oldPhotosCount..<imageListServicePhotosCount)
                 }
             }
     }

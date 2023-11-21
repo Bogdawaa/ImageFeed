@@ -124,6 +124,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="46S-2S-k4T">
                                 <rect key="frame" x="16" y="680" width="361" height="48"/>
                                 <color key="backgroundColor" name="YPWhite"/>
+                                <accessibility key="accessibilityConfiguration" identifier="loginButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="3eJ-YQ-4Jf"/>
                                 </constraints>
@@ -153,6 +154,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="OuJ-uj-s4p"/>
+                    <connections>
+                        <outlet property="loginButton" destination="46S-2S-k4T" id="aRt-K7-CPb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ln-wl-2hO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
