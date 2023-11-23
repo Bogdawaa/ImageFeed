@@ -34,6 +34,7 @@ class ImagesListCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = .ypBlack
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
         return imageView

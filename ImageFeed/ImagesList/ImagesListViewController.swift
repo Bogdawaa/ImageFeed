@@ -38,6 +38,7 @@ final class ImagesListViewController: UIViewController & ImageListViewProtocol {
         table.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         table.translatesAutoresizingMaskIntoConstraints = false
         table.backgroundColor = .ypBlack
+        table.separatorStyle = .none
         return table
     }()
     
