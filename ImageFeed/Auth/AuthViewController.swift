@@ -15,14 +15,21 @@ final class AuthViewController: UIViewController {
     
     weak var delegate: AuthViewControllerDelegate?
     
+    @IBOutlet weak var loginButton: UIButton!
+    
     private let identifier = "showWebView"
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        loginButton.accessibilityIdentifier = "loginButton"
         if segue.identifier == identifier {
             guard let webViewViewController = segue.destination as? WebViewViewController
             else {
                 fatalError("Failed to prepare for \(identifier)")
             }
+            let authHelper = AuthHelper()
+            let webViewPresenter = WebViewPresenter(authHelper: authHelper)
+            webViewViewController.presenter = webViewPresenter
+            webViewPresenter.view = webViewViewController
             webViewViewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)

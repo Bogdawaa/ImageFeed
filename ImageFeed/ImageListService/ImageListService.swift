@@ -110,6 +110,10 @@ final class ImageListService {
         }
         task.resume()
     }
+    
+    func getPhotos() -> [Photo] {
+        return photos
+    }
 }
 
 extension ImageListService {

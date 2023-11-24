@@ -8,14 +8,15 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewVontroller: UIViewController {
+public protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfilePresenterProtocol? { get set }
+    func updateProfile(with profile: Profile)
+    func updateAvatar(url: URL)
+}
+
+final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
     
-    private let token = OAuth2TokenStorage().token
-    private let profileService = ProfileService.shared
-    private let profileImageService = ProfileImageService.shared
-    
-    private var profileImageServiceObserver: NSObjectProtocol?
-    private var profile: Profile?
+    var presenter: ProfilePresenterProtocol?
     
     private lazy var profileImageView: UIImageView = {
         let image = UIImage(named: "profilePhoto")
@@ -27,6 +28,7 @@ final class ProfileViewVontroller: UIViewController {
     private lazy var profileNameLabel: UILabel = {
         let label = UILabel()
         label.text = ""
+        label.accessibilityIdentifier = "profileNameLabel"
         label.font = .systemFont(ofSize: 23, weight: .bold)
         label.textColor = .ypWhite
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -36,6 +38,7 @@ final class ProfileViewVontroller: UIViewController {
     private lazy var profileLoginNameLabel: UILabel = {
         let label = UILabel()
         label.text = ""
+        label.accessibilityIdentifier = "profileLoginNameLabel"
         label.font = .systemFont(ofSize: 13, weight: .regular)
         label.textColor = .ypGray
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -54,6 +57,7 @@ final class ProfileViewVontroller: UIViewController {
     private lazy var exitButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("", for: .normal)
+        btn.accessibilityIdentifier = "exitButton"
         btn.setImage(UIImage(named: "exit"), for: .normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: Selector(("exitButtonClicked")), for: .touchUpInside)
@@ -61,35 +65,26 @@ final class ProfileViewVontroller: UIViewController {
     }()
     
     override func viewDidLoad() {
-        view.backgroundColor = .ypBlack
+        super.viewDidLoad()
         
         view.addSubview(profileImageView)
         view.addSubview(profileNameLabel)
         view.addSubview(profileLoginNameLabel)
         view.addSubview(profileBioLabel)
         view.addSubview(exitButton)
+        view.backgroundColor = .ypBlack
         
         applyConstraints()
-
-        if let profile = profileService.profile {
-            updateProfile(with: profile)
-        }
-        
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.didChangeNotification,
-            object: nil,
-            queue: .main
-            ) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
-            }
-        updateAvatar()
+        presenter?.viewDidLoad()
     }
     
-    private func updateAvatar() {
-        guard let avatarURL = ProfileImageService.shared.avatarURL,
-              let url = URL(string: avatarURL)
-        else { return }
+    func updateProfile(with profile: Profile) {
+        profileNameLabel.text = profile.name
+        profileLoginNameLabel.text = profile.loginName
+        profileBioLabel.text = profile.bio
+    }
+    
+    func updateAvatar(url: URL) {
         let processor = RoundCornerImageProcessor(cornerRadius: 20, backgroundColor: .ypBlack)
         profileImageView.kf.indicatorType = .activity
         profileImageView.kf.setImage(
@@ -132,12 +127,6 @@ final class ProfileViewVontroller: UIViewController {
         NSLayoutConstraint.activate(profileNicknameConstraints)
         NSLayoutConstraint.activate(profileMessageConstraints)
         NSLayoutConstraint.activate(exitButtonConstraints)
-    }
-    
-    private func updateProfile(with profile: Profile) {
-        profileNameLabel.text = profile.name
-        profileLoginNameLabel.text = profile.loginName
-        profileBioLabel.text = profile.bio
     }
     
     @objc private func exitButtonClicked() {
